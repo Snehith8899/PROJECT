@@ -1,8 +1,10 @@
 
-
 // import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
+// import "../components/Navbar"
 // import './HomePage.css';
+
+
 
 // import ProductCard from '../components/ProductCard';
 
@@ -46,11 +48,11 @@
 //   useEffect(() => {
 //     const fetchProducts = async () => {
 //       try {
-//         const res = await axios.get(DummyJSONAPI.base_url);
+//         const res = await axios.get(`${DummyJSONAPI.base_url}?limit=100`); // Fetch 100 products
 //         console.log("Fetched Products:", res.data.products); // Debugging
 //         setProducts(res.data.products);
 //       } catch (err) {
-//         setError('Failed to fetch products');
+//         setError("Failed to fetch products");
 //       } finally {
 //         setLoading(false);
 //       }
@@ -59,11 +61,11 @@
 //   }, []);
 
 //   useEffect(() => {
-//     if (selectedCategory === 'All') return;
+//     if (selectedCategory === "All") return;
 
 //     const fetchCategoryProducts = async () => {
 //       try {
-//         const res = await axios.get(`${DummyJSONAPI.base_url}/category/${selectedCategory}`);
+//         const res = await axios.get(`${DummyJSONAPI.base_url}/category/${selectedCategory}?limit=50`); // Fetch 50 per category
 //         setProducts(res.data.products);
 //       } catch (err) {
 //         setError(`Failed to fetch ${selectedCategory} products`);
@@ -100,12 +102,10 @@
 
 // export default HomePage;
 
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import "../components/Navbar"
 import './HomePage.css';
-
-
 
 import ProductCard from '../components/ProductCard';
 
@@ -140,7 +140,7 @@ const categories = [
   { slug: "womens-watches", name: "Women's Watches" }
 ];
 
-const HomePage = () => {
+const HomePage = ({ addToCart }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -149,8 +149,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(`${DummyJSONAPI.base_url}?limit=100`); // Fetch 100 products
-        console.log("Fetched Products:", res.data.products); // Debugging
+        const res = await axios.get(`${DummyJSONAPI.base_url}?limit=100`);
         setProducts(res.data.products);
       } catch (err) {
         setError("Failed to fetch products");
@@ -162,14 +161,31 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedCategory === "All") return;
+    if (selectedCategory === "All") {
+      setLoading(true);
+      setError(null);
+      axios.get(`${DummyJSONAPI.base_url}?limit=100`)
+        .then(res => {
+          setProducts(res.data.products);
+          setLoading(false);
+        })
+        .catch(() => {
+          setError("Failed to fetch products");
+          setLoading(false);
+        });
+      return;
+    }
 
     const fetchCategoryProducts = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        const res = await axios.get(`${DummyJSONAPI.base_url}/category/${selectedCategory}?limit=50`); // Fetch 50 per category
+        const res = await axios.get(`${DummyJSONAPI.base_url}/category/${selectedCategory}?limit=50`);
         setProducts(res.data.products);
       } catch (err) {
         setError(`Failed to fetch ${selectedCategory} products`);
+      } finally {
+        setLoading(false);
       }
     };
     fetchCategoryProducts();
@@ -191,11 +207,13 @@ const HomePage = () => {
       <div className="products">
         {loading && <p>Loading products...</p>}
         {error && <p className="error">{error}</p>}
-        {!loading &&
-          !error &&
-          products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+        {!loading && !error && products.map(product => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            addToCart={addToCart}  // Pass the addToCart function down
+          />
+        ))}
       </div>
     </div>
   );

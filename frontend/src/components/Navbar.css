@@ -4,44 +4,76 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background-color: #111; /* Darker black for contrast */
-  box-shadow: 0 4px 8px rgba(255, 165, 0, 0.5); /* SRH Orange Glow */
+  background-color: #111;
+  box-shadow: 0 4px 8px rgba(255, 165, 0, 0.5);
   position: sticky;
   top: 0;
   width: 100%;
   z-index: 1000;
+  box-sizing: border-box;
 }
 
 /* Logo */
 .navbar-logo {
   font-size: 24px;
   font-weight: bold;
-  color: #f05a22; /* SRH Hyderabad Orange */
+  color: #f05a22;
   text-transform: uppercase;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
-/* Navbar Links */
-.nav-links {
+/* Search */
+.search {
+  flex-grow: 1;
+  margin: 0 20px;
+  max-width: 500px;
+}
+
+.search input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  box-sizing: border-box;
+}
+
+/* Cart Icon */
+.cart {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
   display: flex;
-  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 50px;
+  position: relative;
 }
 
-.nav-links a {
-  text-decoration: none;
+.cart-icon {
+  width: 36px;
+  height: 36px;
+  filter: invert(1);
+  display: block;
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: #f05a22;
   color: white;
-  font-size: 18px;
-  transition: color 0.3s ease, transform 0.2s;
-}
-
-.nav-links a:hover {
-  color: #f05a22; /* SRH Orange */
-  transform: scale(1.1);
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
 }
 
 /* Mobile Menu */
 .menu-icon {
-  display: none; /* Hidden on desktops */
+  display: none;
   font-size: 28px;
   color: white;
   cursor: pointer;
@@ -50,7 +82,7 @@
 /* Responsive Navbar */
 @media (max-width: 768px) {
   .nav-links {
-    display: none; /* Hide links by default */
+    display: none;
     flex-direction: column;
     position: absolute;
     top: 60px;
@@ -63,10 +95,15 @@
   }
 
   .nav-links.show {
-    display: flex; /* Show menu when active */
+    display: flex;
   }
 
   .menu-icon {
-    display: block; /* Show menu icon */
+    display: block;
+  }
+
+  .search {
+    margin: 10px 0;
+    max-width: 100%;
   }
 }
