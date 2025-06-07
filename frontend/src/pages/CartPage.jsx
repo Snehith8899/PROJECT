@@ -100,7 +100,7 @@ const CartPage = ({ cartItems, removeFromCart, updateQty, toggleCart }) => {
             <div className="cart-footer">
               <p><strong>Payment Method:</strong> {selectedPayment.toUpperCase()}</p>
               <h4>Total Paid: {formatINR(total)}</h4>
-              <p style={{ color: 'green', marginTop: '10px' }}>🎉 Your order was placed successfully!</p>
+              <p style={{ color: 'green', marginTop: '10px' }}>🎉 You have paid successfully!</p>
             </div>
           </>
         ) : (
