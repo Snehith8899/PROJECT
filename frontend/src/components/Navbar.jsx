@@ -5,7 +5,7 @@ const Navbar = ({ cartItemCount = 0, toggleCart }) => {
   return (
     <nav className="navbar">
       <div className="navbar-logo" style={{ cursor: 'pointer' }}>
-        MyStore
+        Snehith-Store
       </div>
 
       <div className="search">

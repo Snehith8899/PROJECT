@@ -4,7 +4,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background-color: #111;
+  /* background-color: #111; */
+  background-color:white;
   box-shadow: 0 4px 8px rgba(255, 165, 0, 0.5);
   position: sticky;
   top: 0;
@@ -51,12 +52,14 @@
   margin-left: 50px;
   position: relative;
 }
-
 .cart-icon {
   width: 36px;
   height: 36px;
-  filter: invert(1);
+  /* Remove this line ↓ */
+  /* filter: invert(1); */
   display: block;
+  fill: #f05a22; /* For SVGs */
+  color: #f05a22; /* For font icons like Font Awesome */
 }
 
 .cart-count {
@@ -64,7 +67,7 @@
   top: -6px;
   right: -6px;
   background-color: #f05a22;
-  color: white;
+  color: #ffffff;
   font-size: 12px;
   font-weight: bold;
   padding: 2px 6px;
