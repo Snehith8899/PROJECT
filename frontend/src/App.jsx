@@ -6,10 +6,10 @@ import CartPage from './pages/CartPage';
 
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [showCart, setShowCart] = useState(false);
 
   // Add product to cart or increment quantity
   const addToCart = (product) => {
-    console.log('Adding product:', product);
     setCartItems((prev) => {
       const exists = prev.find(item => item.id === product.id);
       if (exists) {
@@ -40,22 +40,37 @@ const App = () => {
   // Total count for badge
   const cartCount = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
+  // Toggle cart sidebar open/close
+  const toggleCart = () => setShowCart(prev => !prev);
+
   return (
     <Router>
-      <Navbar cartItemCount={cartCount} />
+      <Navbar cartItemCount={cartCount} toggleCart={toggleCart} />
       <Routes>
-        <Route path="/" element={<HomePage addToCart={addToCart} />} />
         <Route
-          path="/cart"
+          path="/"
           element={
-            <CartPage
+            <HomePage
+              addToCart={addToCart}
               cartItems={cartItems}
               removeFromCart={removeFromCart}
               updateQty={updateQty}
+              showCart={showCart}
+              toggleCart={toggleCart}
             />
           }
         />
       </Routes>
+
+      {/* Render cart sidebar on top of all pages */}
+      {showCart && (
+        <CartPage
+          cartItems={cartItems}
+          removeFromCart={removeFromCart}
+          updateQty={updateQty}
+          toggleCart={toggleCart}
+        />
+      )}
     </Router>
   );
 };
