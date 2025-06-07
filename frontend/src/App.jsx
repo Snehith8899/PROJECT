@@ -1,21 +1,3 @@
-// import React from 'react';
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import Navbar from './components/Navbar';
-// import HomePage from './pages/HomePage';
-
-// const App = () => {
-//   return (
-//     <Router>
-//       <Navbar />
-//       <Routes>
-//         <Route path="/" element={<HomePage />} />
-//       </Routes>
-//     </Router>
-//   );
-// };
-
-// export default App;
-
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -25,7 +7,7 @@ import CartPage from './pages/CartPage';
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
 
-  // Add product to cart or increment quantity if already present
+  // Add product to cart or increment quantity
   const addToCart = (product) => {
     console.log('Adding product:', product);
     setCartItems((prev) => {
@@ -35,17 +17,16 @@ const App = () => {
           item.id === product.id ? { ...item, qty: item.qty + 1 } : item
         );
       }
-      // Add new product with qty 1
       return [...prev, { ...product, qty: 1 }];
     });
   };
 
-  // Remove product entirely from cart
+  // Remove product from cart
   const removeFromCart = (id) => {
     setCartItems((prev) => prev.filter(item => item.id !== id));
   };
 
-  // Update product quantity by amount (+1 or -1), remove if qty <= 0
+  // Change quantity (+/-)
   const updateQty = (id, amount) => {
     setCartItems((prev) =>
       prev
@@ -56,12 +37,12 @@ const App = () => {
     );
   };
 
-  // Total number of items in cart (for badge count)
+  // Total count for badge
   const cartCount = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   return (
     <Router>
-      <Navbar cartCount={cartCount} />
+      <Navbar cartItemCount={cartCount} />
       <Routes>
         <Route path="/" element={<HomePage addToCart={addToCart} />} />
         <Route
