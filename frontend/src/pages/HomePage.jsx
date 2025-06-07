@@ -94,11 +94,9 @@ const HomePage = ({ addToCart }) => {
 
   return (
     <>
-      {/* Toast message fixed at top */}
       {message && <div className="success-message">{message}</div>}
 
       <div className="homepage">
-        {/* Categories */}
         <div className="categories">
           <button key="all" onClick={() => setSelectedCategory("All")}>All</button>
           {categories.map((cat) => (
@@ -108,7 +106,6 @@ const HomePage = ({ addToCart }) => {
           ))}
         </div>
 
-        {/* Products */}
         <div className="products">
           {loading && <p>Loading products...</p>}
           {error && <p className="error">{error}</p>}
