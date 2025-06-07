@@ -1,8 +1,17 @@
+
+
 import React from 'react';
 
 const ProductCard = ({ product, addToCart }) => {
-  const conversionRate = 83; // USD to INR example
-  const priceInRupees = (product.price * conversionRate).toFixed(2);
+  const conversionRate = 83;
+  const priceInRupees = product.price * conversionRate;
+
+  const formattedPrice = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(priceInRupees);
 
   return (
     <div className="product-card">
@@ -14,7 +23,7 @@ const ProductCard = ({ product, addToCart }) => {
 
       <div className="product-details">
         <h3>{product.title}</h3>
-        <p>₹{priceInRupees}</p>
+        <p>{formattedPrice}</p>
       </div>
 
       <button
